@@ -26,6 +26,17 @@ void insert_end(struct node** ptr_to_head, int value) {
     }
 }
 
+// insert node at start of list
+void insert_start(struct node** ptr_to_head, int value) {
+    struct node* new_node = create_node(value);
+    if (*ptr_to_head == NULL) {
+        *ptr_to_head = new_node;
+    } else {
+        new_node->link = *ptr_to_head;
+        *ptr_to_head = new_node;
+    }
+}
+
 void insert_in_sorted(struct node** ptr_to_head, int value) {
     struct node* new_node = create_node(value);
     if (*ptr_to_head == NULL) {
