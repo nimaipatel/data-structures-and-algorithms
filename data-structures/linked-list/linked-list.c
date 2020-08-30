@@ -41,6 +41,25 @@ void insert_start(struct node** ptr_to_head, int value) {
     }
 }
 
+// insert node at position provided by parameter
+void insert_at_pos(struct node** ptr_to_head, int value, int position) {
+    if (position == 0) {
+        // insertion at first (0th) index
+        insert_start(ptr_to_head, value);
+    } else {
+        int counter = 0;
+        struct node *ptr = *ptr_to_head, *prev;
+        while (counter != position) {
+            prev = ptr;
+            ptr = ptr->link;
+            counter++;
+        }
+        struct node* new_node = create_node(value);
+        new_node->link = ptr;
+        prev->link = new_node;
+    }
+}
+
 // insert value at appropriate position automatically in sorted linked-list
 void insert_in_sorted(struct node** ptr_to_head, int value) {
     struct node* new_node = create_node(value);
@@ -83,6 +102,21 @@ void delete_first(struct node** ptr_to_head) {
     } else {
         *ptr_to_head = (**ptr_to_head).link;
         free(temp);
+    }
+}
+
+// search for paramter ```query``` in linked-list, returns index of first occurence
+int search(struct node** ptr_to_head, int query) {
+    if ((**ptr_to_head).data == query) {
+        return 0;
+    } else {
+        int index_counter = 0;
+        struct node* ptr = *ptr_to_head;
+        while (ptr->data != query) {
+            ptr = ptr->link;
+            index_counter++;
+        }
+        return index_counter;
     }
 }
 
@@ -130,11 +164,9 @@ void traverse(struct node* head) {
 
 int main() {
     struct node* head = NULL;
-    insert_end(&head, 5);
-    insert_end(&head, 5);
-    insert_end(&head, 5);
-    insert_start(&head, 7);
-
+    for (int i = 0; i < 5; i++) {
+        insert_end(&head, i);
+    }
     traverse(head);
     return 0;
 }
