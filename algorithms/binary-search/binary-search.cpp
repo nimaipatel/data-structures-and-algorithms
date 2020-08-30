@@ -1,4 +1,4 @@
-#include <iostream>
+#include <stdio.h>
 
 int search(int* first, int* last, int term) {
     int* low = first;
@@ -21,6 +21,6 @@ int search(int* first, int* last, int term) {
 
 int main() {
     int arr[] = {1, 3, 5, 7, 9, 11, 54, 76, 81};
-    std::cout << search(arr, arr + 8, 5);
+    printf("%d", search(arr, arr + 8, 5));
     return 0;
 }
