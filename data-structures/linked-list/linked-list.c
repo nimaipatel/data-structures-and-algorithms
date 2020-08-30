@@ -41,35 +41,38 @@ void insert_start(struct node** ptr_to_head, int value) {
     }
 }
 
+// insert value at appropriate position automatically in sorted linked-list
 void insert_in_sorted(struct node** ptr_to_head, int value) {
     struct node* new_node = create_node(value);
     if (*ptr_to_head == NULL) {
+        // condition if list is empty
         *ptr_to_head = new_node;
-
     } else if (value < (**ptr_to_head).data) {
+        // condition if new value is less than first node
         new_node->link = *ptr_to_head;
         *ptr_to_head = new_node;
     } else {
         struct node* ptr = *ptr_to_head;
         struct node* prev;
         while (value >= ptr->data) {
-            /*printf("\n %d %p", ptr->data, ptr->link);*/
             if (ptr->link == NULL) {
                 break;
             }
             prev = ptr;
             ptr = ptr->link;
         }
-        // condition if element is larger than all:
         if (ptr->link == NULL) {
+            // condition if element is larger than all other elements
             ptr->link = new_node;
         } else {
+            // generic condition
             new_node->link = ptr;
             prev->link = new_node;
         }
     }
 }
 
+// delete first node
 void delete_first(struct node** ptr_to_head) {
     struct node* temp = *ptr_to_head;
     if (*ptr_to_head == NULL) {
@@ -83,6 +86,7 @@ void delete_first(struct node** ptr_to_head) {
     }
 }
 
+// count number of nodes
 int count_nodes(struct node* head) {
     struct node* temp;
     temp = head;
@@ -96,6 +100,16 @@ int count_nodes(struct node* head) {
     return counter + 1;
 }
 
+// concatonate second linked-list to first one
+void concat(struct node** ptr_to_head1, struct node** ptr_to_head2) {
+    struct node* ptr = *ptr_to_head1;
+    while (ptr->link != NULL) {
+        ptr = ptr->link;
+    }
+    ptr->link = *ptr_to_head2;
+}
+
+// traverse and print all elements
 void traverse(struct node* head) {
     struct node* temp;
     if (head == NULL) {
@@ -112,14 +126,6 @@ void traverse(struct node* head) {
             temp = temp->link;
         }
     }
-}
-
-void concat(struct node** ptr_to_head1, struct node** ptr_to_head2) {
-    struct node* ptr = *ptr_to_head1;
-    while (ptr->link != NULL) {
-        ptr = ptr->link;
-    }
-    ptr->link = *ptr_to_head2;
 }
 
 int main() {
