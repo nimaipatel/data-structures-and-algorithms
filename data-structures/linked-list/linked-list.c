@@ -7,6 +7,7 @@ struct node {
     struct node* link;
 };
 
+// craete new node and return address
 struct node* create_node(int value) {
     struct node* new_node = (struct node*)malloc(sizeof(struct node));
     new_node->data = value;
@@ -14,6 +15,7 @@ struct node* create_node(int value) {
     return new_node;
 }
 
+// traverse to end and insert node
 void insert_end(struct node** ptr_to_head, int value) {
     struct node* temp = create_node(value);
     struct node* ptr;
@@ -21,7 +23,9 @@ void insert_end(struct node** ptr_to_head, int value) {
         *ptr_to_head = temp;
     } else {
         ptr = *ptr_to_head;
-        while (ptr->link != NULL) { ptr = ptr->link; }
+        while (ptr->link != NULL) {
+            ptr = ptr->link;
+        }
         ptr->link = temp;
     }
 }
@@ -50,7 +54,9 @@ void insert_in_sorted(struct node** ptr_to_head, int value) {
         struct node* prev;
         while (value >= ptr->data) {
             /*printf("\n %d %p", ptr->data, ptr->link);*/
-            if (ptr->link == NULL) { break; }
+            if (ptr->link == NULL) {
+                break;
+            }
             prev = ptr;
             ptr = ptr->link;
         }
@@ -80,9 +86,13 @@ void delete_first(struct node** ptr_to_head) {
 int count_nodes(struct node* head) {
     struct node* temp;
     temp = head;
-    if (temp == NULL) { return 0; }
+    if (temp == NULL) {
+        return 0;
+    }
     int counter = 0;
-    for (temp = head; temp->link != NULL; temp = temp->link) { counter++; }
+    for (temp = head; temp->link != NULL; temp = temp->link) {
+        counter++;
+    }
     return counter + 1;
 }
 
@@ -106,12 +116,19 @@ void traverse(struct node* head) {
 
 void concat(struct node** ptr_to_head1, struct node** ptr_to_head2) {
     struct node* ptr = *ptr_to_head1;
-    while (ptr->link != NULL) { ptr = ptr->link; }
+    while (ptr->link != NULL) {
+        ptr = ptr->link;
+    }
     ptr->link = *ptr_to_head2;
 }
 
 int main() {
     struct node* head = NULL;
+    insert_end(&head, 5);
+    insert_end(&head, 5);
+    insert_end(&head, 5);
+    insert_start(&head, 7);
 
+    traverse(head);
     return 0;
 }

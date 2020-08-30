@@ -2,7 +2,9 @@
 
 int search(int *first, int *last, int term) {
     for (int *iter = first; iter != last; iter++) {
-        if (*iter == term) { return (iter - first); }
+        if (*iter == term) {
+            return (iter - first);
+        }
     }
     return -1;
 }
