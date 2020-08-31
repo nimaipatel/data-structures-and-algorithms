@@ -33,11 +33,23 @@ bool is_empty(struct stack* stack_ptr) {
     return false;
 }
 
+bool is_quarter_full(struct stack* stack_ptr) {
+    if (stack_ptr->top < stack_ptr->array_capacity / 4) {
+        return true;
+    }
+    return false;
+}
+
 void pop(struct stack* stack_ptr) {
     if (stack_ptr->top == -1) {
         printf("Stack is empty!");
     } else {
         stack_ptr->top--;
+    }
+    if (is_quarter_full(stack_ptr)) {
+        // halve the array_capacity and reallocate memory
+        stack_ptr->array_capacity /= 2;
+        stack_ptr->values = realloc(stack_ptr->values, sizeof(int) * stack_ptr->array_capacity);
     }
 }
 
@@ -59,6 +71,8 @@ int peek(struct stack* stack_ptr) {
 
 int main() {
     struct stack* stack1 = create_stack();
+
+    // TODO: put demo later
 
     return 0;
 }
