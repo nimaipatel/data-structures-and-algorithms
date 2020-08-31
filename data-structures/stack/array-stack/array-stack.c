@@ -36,8 +36,9 @@ bool is_empty(struct stack* stack_ptr) {
 void pop(struct stack* stack_ptr) {
     if (stack_ptr->top == -1) {
         printf("Stack is empty!");
+    } else {
+        stack_ptr->top--;
     }
-    stack_ptr->top--;
 }
 
 void push(struct stack* stack_ptr, int value) {
