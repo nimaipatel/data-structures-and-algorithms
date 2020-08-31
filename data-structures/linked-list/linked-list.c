@@ -164,9 +164,8 @@ void traverse(struct node* head) {
 
 int main() {
     struct node* head = NULL;
-    for (int i = 0; i < 5; i++) {
-        insert_end(&head, i);
-    }
-    traverse(head);
+
+    // TODO : put demo later
+
     return 0;
 }
