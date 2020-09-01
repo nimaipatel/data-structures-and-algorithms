@@ -69,20 +69,8 @@ void traverse(struct node* top) {
 
 int main() {
     struct node* top = NULL;
-    push(&top, 7);
-    push(&top, 6);
-    push(&top, 5);
 
-    printf("\n%d", peek(&top));
-    pop(&top);
-
-    printf("\n%d", peek(&top));
-    pop(&top);
-
-    printf("\n%d", peek(&top));
-    pop(&top);
-
-    printf("\n%d", peek(&top));
+    // TODO: put demo later
 
     return 0;
 }
