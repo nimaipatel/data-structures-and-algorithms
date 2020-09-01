@@ -196,6 +196,17 @@ struct node* split(struct node** ptr_to_head, int position) {
     return head2;
 }
 
+void reverse(struct node** ptr_to_head) {
+    struct node *temp = *ptr_to_head, *prev = NULL, *next;
+    while (temp != NULL) {
+        next = temp->link;
+        temp->link = prev;
+        prev = temp;
+        temp = next;
+    }
+    *ptr_to_head = prev;
+}
+
 // traverse and print all elements
 void traverse(struct node* head) {
     struct node* temp;
