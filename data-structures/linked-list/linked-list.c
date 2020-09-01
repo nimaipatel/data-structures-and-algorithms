@@ -182,6 +182,19 @@ void concat(struct node** ptr_to_head1, struct node** ptr_to_head2) {
     ptr->link = *ptr_to_head2;
 }
 
+struct node* split(struct node** ptr_to_head, int position) {
+    int counter = 0;
+    struct node* temp = *ptr_to_head;
+    while (counter != position) {
+        temp = temp->link;
+        counter++;
+    }
+    /*struct node** ptr_to_head2 = (struct node**)malloc(sizeof(struct node*));*/
+    struct node* ptr_to_head2 = temp->link;
+    temp->link = NULL;
+    return ptr_to_head2;
+}
+
 // traverse and print all elements
 void traverse(struct node* head) {
     struct node* temp;
