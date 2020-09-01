@@ -105,6 +105,21 @@ void delete_first(struct node** ptr_to_head) {
     }
 }
 
+void delete_last(struct node** ptr_to_head) {
+    if (*ptr_to_head == NULL) {
+        printf("List is empty, nothing to delete");
+    } else {
+        struct node* temp = *ptr_to_head;
+        struct node* prev;
+        while (temp->link != NULL) {
+            prev = temp;
+            temp = temp->link;
+        }
+        prev->link = NULL;
+        free(temp);
+    }
+}
+
 // search for paramter ```query``` in linked-list, returns index of first occurence
 int search(struct node** ptr_to_head, int query) {
     if ((**ptr_to_head).data == query) {
@@ -164,6 +179,14 @@ void traverse(struct node* head) {
 
 int main() {
     struct node* head = NULL;
+
+    insert_in_sorted(&head, 1);
+    insert_in_sorted(&head, 5);
+    insert_in_sorted(&head, 7);
+
+    delete_last(&head);
+
+    traverse(head);
 
     // TODO : put demo later
 
