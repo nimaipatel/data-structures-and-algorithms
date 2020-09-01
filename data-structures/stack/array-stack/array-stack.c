@@ -65,6 +65,7 @@ void push(struct stack* stack_ptr, int value) {
 int peek(struct stack* stack_ptr) {
     if (is_empty(stack_ptr)) {
         printf("stack is empty, throwing garbage!");
+        return -1;
     }
     return stack_ptr->values[stack_ptr->top];
 }
