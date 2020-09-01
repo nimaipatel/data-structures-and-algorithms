@@ -120,6 +120,30 @@ void delete_last(struct node** ptr_to_head) {
     }
 }
 
+void delete_at_pos(struct node** ptr_to_head, int position) {
+    if (position == 0) {
+        delete_first(ptr_to_head);
+        return;
+    }
+    int counter = 0;
+    struct node* temp = *ptr_to_head;
+    struct node* prev;
+    while (counter != position) {
+        prev = temp;
+        temp = temp->link;
+        counter++;
+    }
+    if (temp->link == NULL) {
+        // if last node in list
+        prev->link = NULL;
+        free(temp);
+    } else {
+        // generic condition
+        prev->link = temp->link;
+        free(temp);
+    }
+}
+
 // search for paramter ```query``` in linked-list, returns index of first occurence
 int search(struct node** ptr_to_head, int query) {
     if ((**ptr_to_head).data == query) {
@@ -179,14 +203,6 @@ void traverse(struct node* head) {
 
 int main() {
     struct node* head = NULL;
-
-    insert_in_sorted(&head, 1);
-    insert_in_sorted(&head, 5);
-    insert_in_sorted(&head, 7);
-
-    delete_last(&head);
-
-    traverse(head);
 
     // TODO : put demo later
 
