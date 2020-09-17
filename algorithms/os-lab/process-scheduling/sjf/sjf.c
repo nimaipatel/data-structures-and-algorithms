@@ -39,7 +39,7 @@ struct process* find_shortest(double time, struct process* processes, int n) {
     return shortest;
 }
 
-void simulate(struct process* processes, int n) {
+void sjf(struct process* processes, int n) {
     sort_by_at(processes, n);
     double* original_bt = (double*)malloc(n * sizeof(double));
     for (int i = 0; i < n; i++) {
@@ -79,5 +79,5 @@ int main() {
     struct process processes[5] = {{1, 6, 2}, {2, 2, 5}, {3, 8, 1}, {4, 3, 0}, {5, 4, 4}};
     // n is number of processes
     int n = sizeof(processes) / sizeof(processes[0]);
-    simulate(processes, n);
+    sjf(processes, n);
 }
