@@ -1,7 +1,6 @@
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 struct process {
     int p_id;    // process id
