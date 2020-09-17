@@ -244,9 +244,8 @@ void traverse(struct node* head) {
 }
 
 int main() {
-    struct node* head = NULL;
-
-    // TODO : put demo later
-
+    for (int i = 0; i < 5; i++) {
+        printf("\n%d", i);
+    }
     return 0;
 }
