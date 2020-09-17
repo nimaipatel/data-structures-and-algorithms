@@ -1,0 +1,14 @@
+{
+    "configurations": {
+        "Launch": {
+            "adapter": "vscode-cpptools",
+            "configuration": {
+                "request": "launch",
+                "program": "${workspaceRoot}/fcfs-new",
+                "cwd": "${workspaceRoot}",
+                "externalconsole": true,
+                "MiMode": "gdb"
+            }
+        }
+    }
+}
