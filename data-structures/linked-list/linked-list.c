@@ -190,6 +190,23 @@ struct node* copy(struct node** ptr_to_head) {
     return head2;
 }
 
+// make new list with same data and return address of new list
+struct node* alternate_nodes_list(struct node** ptr_to_head) {
+    struct node* head2 = (struct node*)malloc(sizeof(struct node));
+    struct node* temp = *ptr_to_head;
+    struct node* temp2 = head2;
+    while (temp != NULL) {
+        struct node* new_node = create_node(temp->data);
+        temp2->link = new_node;
+        temp = temp->link->link;
+        temp2 = temp2->link;
+    }
+    // can this be done without deleting first node?
+    // still, doesn't matter as time complexity will not increase
+    delete_first(&head2);
+    return head2;
+}
+
 // concatonate second linked-list to first one
 void concat(struct node** ptr_to_head1, struct node** ptr_to_head2) {
     struct node* ptr = *ptr_to_head1;
