@@ -40,7 +40,7 @@ struct process* find_shortest(double time, struct process* processes, int n) {
 
 void sjf(struct process* processes, int n) {
     sort_by_at(processes, n);
-    double* original_bt = (double*)malloc(n * sizeof(double));
+    double original_bt[n];
     for (int i = 0; i < n; i++) {
         *(original_bt + i) = (processes + i)->bt;
     }
@@ -67,7 +67,6 @@ void sjf(struct process* processes, int n) {
         avg_wt += (processes + i)->wt;
         avg_tat += (processes + i)->tat;
     }
-    free(original_bt);
     avg_wt /= n;
     avg_tat /= n;
     printf("\nAverage Waiting Time: %f\nAverage Turn Around Time: %f", avg_wt, avg_tat);
