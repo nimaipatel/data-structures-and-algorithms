@@ -74,6 +74,37 @@ struct Node* add(struct Node** ptr_to_head1, struct Node** ptr_to_head2) {
     return sum_head;
 }
 
+struct Node* subtract(struct Node** ptr_to_head1, struct Node** ptr_to_head2) {
+    struct Node* sum_head = (struct Node*)malloc(sizeof(struct Node));
+    sum_head = NULL;
+    struct Node* iter1 = *ptr_to_head1;
+    struct Node* iter2 = *ptr_to_head2;
+    while (iter1 != NULL && iter2 != NULL) {
+        if (iter1->power > iter2->power) {
+            insert_end(&sum_head, iter1->coeff, iter1->power);
+            iter1 = iter1->link;
+        } else if (iter2->power > iter1->power) {
+            insert_end(&sum_head, -iter2->coeff, iter2->power);
+            iter2 = iter2->link;
+        } else {
+            insert_end(&sum_head, iter1->coeff - iter2->coeff, iter2->power);
+            iter1 = iter1->link;
+            iter2 = iter2->link;
+        }
+    }
+    while (iter1 != NULL && iter2 != NULL) {
+        if (iter1 != NULL) {
+            insert_end(&sum_head, iter1->coeff, iter1->power);
+            iter1 = iter1->link;
+        }
+        if (iter2 != NULL) {
+            insert_end(&sum_head, -iter2->coeff, iter2->power);
+            iter2 = iter2->link;
+        }
+    }
+    return sum_head;
+}
+
 int main() {
     struct Node* head1 = NULL;
     struct Node* head2 = NULL;
