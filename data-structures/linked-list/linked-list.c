@@ -144,7 +144,8 @@ void delete_at_pos(struct node** ptr_to_head, int position) {
     }
 }
 
-// search for paramter ```query``` in linked-list, returns index of first occurence
+// search for paramter ```query``` in linked-list, returns index of first
+// occurence
 int search(struct node** ptr_to_head, int query) {
     if ((**ptr_to_head).data == query) {
         return 0;
@@ -216,8 +217,8 @@ void concat(struct node** ptr_to_head1, struct node** ptr_to_head2) {
     ptr->link = *ptr_to_head2;
 }
 
-// split linked list refered by head refered by ```ptr_to_head``` at ```position```
-// return head of new list
+// split linked list refered by head refered by ```ptr_to_head``` at
+// ```position``` return head of new list
 struct node* split(struct node** ptr_to_head, int position) {
     int counter = 0;
     struct node* temp = *ptr_to_head;
