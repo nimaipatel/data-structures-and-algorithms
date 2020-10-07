@@ -61,6 +61,7 @@ void print_poly(struct Node* head) {
         }
         iter = iter->link;
     }
+    printf("\n");
 }
 
 struct Node* add(struct Node** ptr_to_head1, struct Node** ptr_to_head2) {
