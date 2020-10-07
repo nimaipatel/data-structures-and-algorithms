@@ -126,6 +126,28 @@ struct Node* subtract(struct Node** ptr_to_head1, struct Node** ptr_to_head2) {
     return sum_head;
 }
 
+struct Node* multiply(struct Node** ptr_to_head1, struct Node** ptr_to_head2) {
+    struct Node* iter1 = *ptr_to_head1;
+    struct Node* prod = (struct Node*)malloc(sizeof(struct Node));
+    prod = NULL;
+    while (iter1 != NULL) {
+        struct Node* temp = NULL;
+        struct Node* iter2 = *ptr_to_head2;
+        while (iter2 != NULL) {
+            insert_end(&temp, iter1->coeff * iter2->coeff,
+                       iter1->power + iter2->power);
+            iter2 = iter2->link;
+        }
+        if (prod == NULL) {
+            prod = temp;
+        } else {
+            prod = add(&prod, &temp);
+        }
+        iter1 = iter1->link;
+    }
+    return prod;
+}
+
 int main() {
     struct Node* head1 = NULL;
     struct Node* head2 = NULL;
