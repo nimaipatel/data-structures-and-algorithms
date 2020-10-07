@@ -152,12 +152,58 @@ int main() {
     struct Node* head1 = NULL;
     struct Node* head2 = NULL;
 
-    insert_end(&head1, 5, 2);
-    insert_end(&head1, 3, 1);
-    insert_end(&head1, 2, 0);
+    int n1, n2;
+    printf("Enter number of terms in first list:");
+    scanf("%d", &n1);
 
-    insert_end(&head2, 2, 2);
-    insert_end(&head2, 5, 0);
+    for (int i = 0; i < n1; i++) {
+        int power, coeff;
+        printf("Enter power of next term:");
+        scanf("%d", &power);
+        printf("Enter coefficent of next term:");
+        scanf("%d", &coeff);
+        insert_end(&head1, coeff, power);
+    }
 
+    printf("First polynomial is:");
+    print_poly(head1);
+
+    printf("Enter number of terms in second list:");
+    scanf("%d", &n2);
+
+    for (int i = 0; i < n2; i++) {
+        int power, coeff;
+        printf("Enter power of next term:");
+        scanf("%d", &power);
+        printf("Enter coefficent of next term:");
+        scanf("%d", &coeff);
+        insert_end(&head2, coeff, power);
+    }
+
+    printf("Second polynomial is:");
+    print_poly(head2);
+
+    struct Node* result;
+    int oper;
+    printf(
+        "Enter 1 for additons Enter 2 for subtraction Enter 3 for "
+        "multiplication:");
+    scanf("%d", &oper);
+    switch (oper) {
+        case 1:
+            result = add(&head1, &head2);
+            break;
+        case 2:
+            result = subtract(&head1, &head2);
+            break;
+        case 3:
+            result = multiply(&head1, &head2);
+            break;
+        default:
+            printf("invalid operation");
+    }
+
+    printf("result is:");
+    print_poly(result);
     return 0;
 }
