@@ -43,6 +43,26 @@ void traverse(struct Node* head) {
     }
 }
 
+void print_poly(struct Node* head) {
+    struct Node* iter = head;
+    while (iter != NULL) {
+        if (iter->power != 0) {
+            if (iter->coeff < 0) {
+                printf(" %dx^%d", iter->coeff, iter->power);
+            } else if (iter->coeff > 0) {
+                printf(" +%dx^%d", iter->coeff, iter->power);
+            }
+        } else {
+            if (iter->coeff < 0) {
+                printf(" %d", iter->coeff);
+            } else if (iter->coeff > 0) {
+                printf(" +%d", iter->coeff);
+            }
+        }
+        iter = iter->link;
+    }
+}
+
 struct Node* add(struct Node** ptr_to_head1, struct Node** ptr_to_head2) {
     struct Node* sum_head = (struct Node*)malloc(sizeof(struct Node));
     sum_head = NULL;
