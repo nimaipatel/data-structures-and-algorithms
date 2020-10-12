@@ -35,14 +35,6 @@ void insert_end(struct Node** head_ref, int coeff, int power) {
     }
 }
 
-void traverse(struct Node* head) {
-    struct Node* iter = head;
-    while (iter != NULL) {
-        print_node(iter);
-        iter = iter->link;
-    }
-}
-
 void print_poly(struct Node* head) {
     struct Node* iter = head;
     while (iter != NULL) {
