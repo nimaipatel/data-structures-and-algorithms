@@ -95,11 +95,13 @@ void print_postfix(char* infix) {
         printf("%c", peek());
         pop();
     }
+    printf("\n");
 }
 
 int main() {
-    char infix[] = "";
-    scanf("%s", infix);
-    printf("%d", strlen(infix));
+    char infix[100];
+    printf("Enter infix expression: ");
+    fgets(infix, 100, stdin);
+    print_postfix(infix);
     return 0;
 }
