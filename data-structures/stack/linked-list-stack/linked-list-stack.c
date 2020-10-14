@@ -61,16 +61,37 @@ void traverse(struct node* top) {
         struct node* temp = top;
         printf("\n");
         while (temp != NULL) {
-            printf("%d ", temp->data);
+            printf("%d\t", temp->data);
             temp = temp->link;
         }
     }
+    printf("\n");
 }
 
 int main() {
-    struct node* top = NULL;
-
-    // TODO: put demo later
-
+    struct node* head = NULL;
+    int choice;
+    do {
+        printf("\n0 to push\n1 to pop\nAny other number to exit\n");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 0:
+                printf("Enter value you want to push:\n");
+                int v;
+                scanf("%d", &v);
+                push(&head, v);
+                traverse(head);
+                break;
+            case 1:
+                printf("Popping from stack\n");
+                pop(&head);
+                traverse(head);
+                break;
+            default:
+                printf("Exiting...\n");
+                break;
+        }
+    } while (choice == 1 || choice == 0);
+    traverse(head);
     return 0;
 }
