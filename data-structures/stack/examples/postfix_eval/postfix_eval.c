@@ -29,6 +29,9 @@ bool is_operand(char c) {
     if (c >= 'A' && c <= 'Z') {
         return true;
     }
+    if (c >= '1' && c <= '9') {
+        return true;
+    }
     return false;
 }
 
@@ -76,19 +79,19 @@ int perform(char oper, int a, int b) {
     assert(is_operator(oper));
     switch (oper) {
         case '^':
-            return pow(a, b);
+            return pow(b, a);
             break;
         case '*':
-            return a * b;
+            return b * a;
             break;
         case '/':
-            return a / b;
+            return b / a;
             break;
         case '+':
-            return a + b;
+            return b + a;
             break;
         case '-':
-            return a - b;
+            return b - a;
             break;
     }
     return 0;
@@ -97,9 +100,6 @@ int perform(char oper, int a, int b) {
 int eval_postfix(char* postfix) {
     char* iter = postfix;
     while (*iter != '\0') {
-        if (*iter == ' ') {
-            continue;
-        }
         if (is_operand(*iter)) {
             char substring[10] = "";
             while (*iter != ' ') {
@@ -107,7 +107,6 @@ int eval_postfix(char* postfix) {
                 iter++;
             }
             push(atoi(substring));
-            printf("%s", substring);
         } else if (is_operator(*iter)) {
             int operand1 = peek();
             pop();
@@ -122,14 +121,9 @@ int eval_postfix(char* postfix) {
 }
 
 int main() {
-    char postfix[100] = "12 24 +";
-    /*char* iter = postfix;*/
-    /*char substring[10] = "";*/
-    /*while (*iter != ' ') {*/
-    /*append_char(substring, *iter);*/
-    /*iter++;*/
-    /*}*/
-    /*printf("%d", atoi(substring));*/
+    char postfix[100] = "";
+    printf("Enter postfix expression: ");
+    fgets(postfix, 100, stdin);
     int res = eval_postfix(postfix);
     printf("%d", res);
 }
