@@ -16,30 +16,29 @@ struct node* create_node(int value) {
 }
 
 // traverse to end and insert node
-void enqueue(struct node** ptr_to_head, int value) {
+void enqueue(struct node** ptr_to_head, struct node** ptr_to_tail, int value) {
     struct node* temp = create_node(value);
-    struct node* ptr;
     if (*ptr_to_head == NULL) {
         *ptr_to_head = temp;
+        *ptr_to_tail = temp;
     } else {
-        ptr = *ptr_to_head;
-        while (ptr->link != NULL) {
-            ptr = ptr->link;
-        }
-        ptr->link = temp;
+        (*ptr_to_tail)->link = temp;
+        *ptr_to_tail = temp;
     }
 }
 
 // delete first node
-void dequeue(struct node** ptr_to_head) {
-    struct node* temp = *ptr_to_head;
+void dequeue(struct node** ptr_to_head, struct node** ptr_to_tail) {
     if (*ptr_to_head == NULL) {
         printf("List is empty, nothing to delete");
-    } else if ((**ptr_to_head).link == NULL) {
+    } else if (*ptr_to_head == *ptr_to_tail) {
+        struct node* temp = *ptr_to_head;
         *ptr_to_head = NULL;
+        *ptr_to_tail = NULL;
         free(temp);
     } else {
-        *ptr_to_head = (**ptr_to_head).link;
+        struct node* temp = *ptr_to_head;
+        *ptr_to_head = (*ptr_to_head)->link;
         free(temp);
     }
 }
@@ -62,6 +61,7 @@ void traverse(struct node* head) {
 
 int main() {
     struct node* head = NULL;
+    struct node* tail = NULL;
     int choice;
     do {
         printf("\n0 to enqueue\n1 to dequeue\nAny other number to exit\n");
@@ -71,12 +71,12 @@ int main() {
                 printf("Enter value you want to enter:\n");
                 int v;
                 scanf("%d", &v);
-                enqueue(&head, v);
+                enqueue(&head, &tail, v);
                 traverse(head);
                 break;
             case 1:
                 printf("Dequeued from queue\n");
-                dequeue(&head);
+                dequeue(&head, &tail);
                 traverse(head);
                 break;
             default:
