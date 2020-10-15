@@ -23,12 +23,6 @@ bool is_operator(char c) {
 }
 
 bool is_operand(char c) {
-    if (c >= 'a' && c <= 'z') {
-        return true;
-    }
-    if (c >= 'A' && c <= 'Z') {
-        return true;
-    }
     if (c >= '1' && c <= '9') {
         return true;
     }
