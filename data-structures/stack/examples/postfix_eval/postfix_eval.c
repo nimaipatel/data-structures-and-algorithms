@@ -8,6 +8,7 @@
 int stack[100];
 int top = -1;
 
+// check if stack is empty
 bool is_empty() {
     if (top == -1) {
         return true;
@@ -15,6 +16,7 @@ bool is_empty() {
     return false;
 }
 
+// check if character is an operator
 bool is_operator(char c) {
     if (c == '^' || c == '+' || c == '*' || c == '-' || c == '/') {
         return true;
@@ -22,6 +24,7 @@ bool is_operator(char c) {
     return false;
 }
 
+// check if character is an operand
 bool is_operand(char c) {
     if (c >= '1' && c <= '9') {
         return true;
@@ -29,6 +32,8 @@ bool is_operand(char c) {
     return false;
 }
 
+// assign precedence to every operator
+// use to compare precedence
 int pres(char c) {
     assert(is_operator(c));
     if (c == '^') {
@@ -40,10 +45,13 @@ int pres(char c) {
     }
 }
 
+// push to stack
 void push(int c) {
     stack[++top] = c;
 }
 
+// pop from stack
+// DOESN'T return, so peek first
 void pop() {
     if (top == -1) {
         printf("Popping from empty stack!");
@@ -53,6 +61,7 @@ void pop() {
     }
 }
 
+// return values at top of stack
 int peek() {
     if (top == -1) {
         printf("Peeking empty stack!");
@@ -61,6 +70,7 @@ int peek() {
     return stack[top];
 }
 
+// append char ```c``` to string ```s```
 void append_char(char* s, char c) {
     char* iter = s;
     while (*iter != '\0') {
@@ -69,6 +79,8 @@ void append_char(char* s, char c) {
     *iter = c;
 }
 
+// perform operation ```oper```
+// on ```a``` and ```b```
 int perform(char oper, int a, int b) {
     assert(is_operator(oper));
     switch (oper) {
@@ -91,6 +103,7 @@ int perform(char oper, int a, int b) {
     return 0;
 }
 
+// return value of postfix expression
 int eval_postfix(char* postfix) {
     char* iter = postfix;
     while (*iter != '\0') {
@@ -114,6 +127,7 @@ int eval_postfix(char* postfix) {
     return peek();
 }
 
+// driver function
 int main() {
     char postfix[100] = "";
     printf("Enter postfix expression: ");

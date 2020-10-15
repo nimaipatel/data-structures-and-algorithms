@@ -7,6 +7,7 @@
 char stack[100];
 int top = -1;
 
+// check if stack is empty
 bool is_empty() {
     if (top == -1) {
         return true;
@@ -14,6 +15,7 @@ bool is_empty() {
     return false;
 }
 
+// check if character is an operator
 bool is_operator(char c) {
     if (c == '^' || c == '+' || c == '*' || c == '-' || c == '/') {
         return true;
@@ -21,6 +23,7 @@ bool is_operator(char c) {
     return false;
 }
 
+// check if character is an operand
 bool is_operand(char c) {
     if (c >= 'a' && c <= 'z') {
         return true;
@@ -31,6 +34,8 @@ bool is_operand(char c) {
     return false;
 }
 
+// assign precedence to every operator
+// use to compare precedence
 int pres(char c) {
     assert(is_operator(c));
     if (c == '^') {
@@ -42,10 +47,13 @@ int pres(char c) {
     }
 }
 
+// push to stack
 void push(char c) {
     stack[++top] = c;
 }
 
+// pop from stack
+// DOESN'T return, so peek first
 void pop() {
     if (top == -1) {
         printf("Popping from empty stack!");
@@ -55,6 +63,7 @@ void pop() {
     }
 }
 
+// return values at top of stack
 char peek() {
     if (top == -1) {
         printf("Peeking empty stack!");
@@ -63,6 +72,7 @@ char peek() {
     return stack[top];
 }
 
+// print postfix expression
 void print_postfix(char* infix) {
     int l = 0;
     char* c = infix;
@@ -98,6 +108,7 @@ void print_postfix(char* infix) {
     printf("\n");
 }
 
+// driver function
 int main() {
     char infix[100];
     printf("Enter infix expression: ");
