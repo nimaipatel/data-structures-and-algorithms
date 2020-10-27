@@ -69,6 +69,7 @@ int front(Queue* queue) {
 }
 
 void print_queue(Queue* queue) {
+    printf("Queue: ");
     for (int i = queue->head_index; i != queue->tail_index;
          i++, i %= queue->capacity) {
         printf("%d ", queue->values[i]);
