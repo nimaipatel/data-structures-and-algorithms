@@ -62,6 +62,22 @@ void min(Node* head) {
     }
 }
 
+int size(Node** head_ref, Node** tail_ref) {
+    if (*head_ref == NULL) {
+        return 0;
+    } else if (*head_ref == *tail_ref) {
+        return 1;
+    } else {
+        Node* iter = *head_ref;
+        int size = 1;
+        while (iter != *tail_ref) {
+            size++;
+            iter = iter->link;
+        }
+        return size;
+    }
+}
+
 void print_queue(Node* head, Node* tail) {
     Node* iter = head;
     while (iter != tail) {
