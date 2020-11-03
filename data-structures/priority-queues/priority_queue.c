@@ -54,6 +54,14 @@ void dequeue(Node** head_ref, Node** tail_ref) {
     }
 }
 
+void min(Node* head) {
+    if (head == NULL) {
+        printf("QUEUE IS EMPTY\n");
+    } else {
+        printf("[V:%d P:%d]", head->value, head->priority);
+    }
+}
+
 void print_queue(Node* head, Node* tail) {
     Node* iter = head;
     while (iter != tail) {
