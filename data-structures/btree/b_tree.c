@@ -23,6 +23,15 @@ void print_node(Node* node) {
     printf("]");
 }
 
+void traverse(Node* root) {
+    if (root != NULL) {
+        for (int i = 0; i < root->order; ++i) {
+            traverse(root->links[i]);
+        }
+        print_node(root);
+    }
+}
+
 // function for creating nodes
 Node* create_node(int* values, int order) {
     // Number of values in each node = (order - 1)
