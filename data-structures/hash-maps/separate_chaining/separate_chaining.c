@@ -51,6 +51,27 @@ void insert(HashTable* hash_table, char* key, char* value) {
     }
 }
 
+void delete (HashTable* hash_table, char* key) {
+    int hashed_key = hash(key) % hash_table->size;
+    if (hash_table->pointer_array[hashed_key]) {
+        if (hash_table->pointer_array[hashed_key]->key == key) {
+            Node* to_delete = hash_table->pointer_array[hashed_key];
+            hash_table->pointer_array[hashed_key] = to_delete->link;
+            free(to_delete);
+        } else {
+            Node *iter = hash_table->pointer_array[hashed_key], *prev;
+            while (iter->key != key) {
+                prev = iter;
+                iter = iter->link;
+            }
+            prev->link = iter->link;
+            free(iter);
+        }
+    } else {
+        printf("KEY FOR DELETION DOESN'T EXIST\n");
+    }
+}
+
 char* get_value(HashTable* hash_table, char* key) {
     int hashed_key = hash(key) % hash_table->size;
     Node* iter = hash_table->pointer_array[hashed_key];
