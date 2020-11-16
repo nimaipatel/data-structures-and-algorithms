@@ -113,17 +113,17 @@ void print_queue(Node* head, Node* tail) {
 
 // graph defined by adjacency matrix
 typedef struct Graph {
-    int n_edges;
+    int n_vertices;
     int** matrix;
 } Graph;
 
-// function for creating graph using adjacency matrix and edges
-Graph* create_graph(int n_edges, int matrix[n_edges][n_edges]) {
+// function for creating graph using adjacency matrix and vertices
+Graph* create_graph(int n_vertices) {
     Graph* graph = (Graph*)malloc(sizeof(Graph));
-    graph->n_edges = n_edges;
-    graph->matrix = (int**)malloc(sizeof(int*) * n_edges);
-    for (int i = 0; i < n_edges; ++i) {
-        graph->matrix[i] = matrix[i];
+    graph->n_vertices = n_vertices;
+    graph->matrix = (int**)malloc(sizeof(int*) * n_vertices);
+    for (int i = 0; i < n_vertices; ++i) {
+        graph->matrix[i] = (int*)malloc(sizeof(int) * n_vertices);
     }
     return graph;
 }
@@ -132,8 +132,8 @@ Graph* create_graph(int n_edges, int matrix[n_edges][n_edges]) {
 void BFS(Graph* graph, bool* visited, int start) {
     Node *head = NULL, *tail = NULL;
     if (!visited) {
-        visited = (bool*)malloc(sizeof(bool) * graph->n_edges);
-        memset(visited, false, graph->n_edges);
+        visited = (bool*)malloc(sizeof(bool) * graph->n_vertices);
+        memset(visited, false, graph->n_vertices);
     }
     enqueue(&head, &tail, start);
     visited[start] = true;
@@ -141,7 +141,7 @@ void BFS(Graph* graph, bool* visited, int start) {
     while (!is_empty(head, tail)) {
         int v = front(head);
         dequeue(&head, &tail);
-        for (int u = 0; u < graph->n_edges; ++u) {
+        for (int u = 0; u < graph->n_vertices; ++u) {
             if (graph->matrix[v][u] == 1 && !visited[u]) {
                 enqueue(&head, &tail, u);
                 visited[u] = true;
@@ -153,9 +153,9 @@ void BFS(Graph* graph, bool* visited, int start) {
 
 // Breadth first traversal of graph
 void BFT(Graph* graph) {
-    bool* visited = (bool*)malloc(sizeof(bool) * graph->n_edges);
-    memset(visited, false, graph->n_edges);
-    for (int i = 0; i < graph->n_edges; ++i) {
+    bool* visited = (bool*)malloc(sizeof(bool) * graph->n_vertices);
+    memset(visited, false, graph->n_vertices);
+    for (int i = 0; i < graph->n_vertices; ++i) {
         if (!visited[i]) {
             BFS(graph, visited, i);
         }
@@ -166,8 +166,8 @@ void BFT(Graph* graph) {
 void DFS(Graph* graph, bool* visited, int start) {
     Node *head = NULL, *tail = NULL;
     if (!visited) {
-        visited = (bool*)malloc(sizeof(bool) * graph->n_edges);
-        memset(visited, false, graph->n_edges);
+        visited = (bool*)malloc(sizeof(bool) * graph->n_vertices);
+        memset(visited, false, graph->n_vertices);
     }
     push(&head, &tail, start);
     visited[start] = true;
@@ -176,7 +176,7 @@ void DFS(Graph* graph, bool* visited, int start) {
         int v = peek(head);
         pop(&head, &tail);
         printf("%d ", v);
-        for (int u = 0; u < graph->n_edges; ++u) {
+        for (int u = 0; u < graph->n_vertices; ++u) {
             if (graph->matrix[v][u] == 1 && !visited[u]) {
                 push(&head, &tail, u);
                 visited[u] = true;
@@ -187,15 +187,48 @@ void DFS(Graph* graph, bool* visited, int start) {
 
 // Depth first traversal of graph
 void DFT(Graph* graph) {
-    bool* visited = (bool*)malloc(sizeof(bool) * graph->n_edges);
-    memset(visited, false, graph->n_edges);
-    for (int i = 0; i < graph->n_edges; ++i) {
+    bool* visited = (bool*)malloc(sizeof(bool) * graph->n_vertices);
+    memset(visited, false, graph->n_vertices);
+    for (int i = 0; i < graph->n_vertices; ++i) {
         if (!visited[i]) {
             DFS(graph, visited, i);
         }
     }
 }
 
+void add_edge(Graph* graph, int v1, int v2) {
+    graph->matrix[v1][v2] = true;
+    graph->matrix[v2][v1] = true;
+}
+
 int main() {
+    int n_vert, option, v1, v2;
+    printf("Enter number of vertices: ");
+    scanf("%d", &n_vert);
+    Graph* graph = create_graph(n_vert);
+    do {
+        printf(
+            "Enter 0 to do add edge\nEnter 1 to do BFT\nEnter 2 to do DFT\n");
+        scanf("%d", &option);
+        switch (option) {
+            case 0:
+                printf("Enter first vertex: ");
+                scanf("%d", &v1);
+                printf("Enter second vertex: ");
+                scanf("%d", &v2);
+                add_edge(graph, v1, v2);
+                break;
+            case 1:
+                BFT(graph);
+                printf("\n");
+                break;
+            case 2:
+                DFT(graph);
+                printf("\n");
+                break;
+            default:
+                break;
+        }
+    } while (option >= 0 && option <= 2);
     return 0;
 }
