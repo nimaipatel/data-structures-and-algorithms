@@ -51,13 +51,15 @@ void insert(HashTable* hash_table, char* key, char* value) {
     if (hash_table->node_arr[index] == NULL) {
         hash_table->node_arr[index] = node;
     } else {
-        index = (index + 1) % hash_table->size;
+        int iter = 1;
+        index = (hashed_key + iter * iter) % hash_table->size;
         while (hash_table->node_arr[index] != NULL) {
             if (index == hashed_key) {
                 printf("NO SPACE LEFT IN HASH TABLE\n");
                 return;
             }
-            index = (index + 1) % hash_table->size;
+            iter++;
+            index = (hashed_key + iter * iter) % hash_table->size;
         }
         hash_table->node_arr[index] = node;
     }
@@ -71,10 +73,12 @@ void delete (HashTable* hash_table, char* key) {
         hash_table->node_arr[hashed_key] = NULL;
         free(temp);
     } else {
-        int index = hashed_key + 1;
+        int iter = 1;
+        int index = (hashed_key + iter * iter) % hash_table->size;
         while (hash_table->node_arr[index] &&
                hash_table->node_arr[index]->key != key) {
-            index = (index + 1) % hash_table->size;
+            iter++;
+            index = (hashed_key + iter * iter) % hash_table->size;
             if (index == hashed_key) {
                 printf("KEY FOR DELETION NOT FOUND\n");
                 return;
