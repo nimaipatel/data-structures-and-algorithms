@@ -52,7 +52,7 @@ void insert(HashTable* ht, int key, int value) {
             ht->node_arr[index] = create_node(key, value);
             return;
         }
-        index = (h_key + i * (R - (value % R)) % ht->size);
+        index = (h_key + i * (R - (key % R))) % ht->size;
     }
 }
 
