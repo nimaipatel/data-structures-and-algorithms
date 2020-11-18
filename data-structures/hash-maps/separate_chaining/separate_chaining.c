@@ -11,8 +11,14 @@ typedef struct Node {
 
 Node* create_node(char* key, char* value) {
     Node* node = (Node*)malloc(sizeof(Node));
-    node->key = key;
-    node->value = value;
+    int key_l = strlen(key);
+    int value_l = strlen(value);
+    char* _key = (char*)malloc(sizeof(char) * key_l);
+    char* _value = (char*)malloc(sizeof(char) * value_l);
+    strcpy(_key, key);
+    strcpy(_value, value);
+    node->key = _key;
+    node->value = _value;
     node->link = NULL;
     return node;
 }
@@ -104,11 +110,30 @@ void print_hash_table(HashTable* hash_table) {
 }
 
 int main() {
-    HashTable* hash_table = create_hash_table(2);
-    insert(hash_table, "dog", "barks");
-    insert(hash_table, "cat", "meows");
-    insert(hash_table, "mouse", "squeaks");
-    char* value = get_value(hash_table, "mouse");
-    printf("%s", value);
+    int size, option;
+    char key[100], value[100];
+    printf("Enter size: ");
+    scanf("%d", &size);
+    HashTable* h = create_hash_table(size);
+    do {
+        printf("Enter 0 to insert value\nEnter 1 to delete value\n");
+        scanf("%d *[^\n]", &option);
+        if (option == 0) {
+            printf("Enter key: ");
+            fgets(key, 100, stdin);
+            printf("Enter value: ");
+            fgets(value, 100, stdin);
+            insert(h, key, value);
+        }
+
+        if (option == 1) {
+            printf("Enter key: ");
+            fgets(key, 100, stdin);
+            delete (h, key);
+        }
+
+        print_hash_table(h);
+
+    } while (option == 0 || option == 1);
     return 0;
 }
