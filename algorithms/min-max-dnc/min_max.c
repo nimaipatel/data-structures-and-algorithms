@@ -48,5 +48,6 @@ int main(int argc, char *argv[]) {
     int arr[] = { 1 , 7 , 9 , 11 , 4 , 5 , 12 , 13 , 11 , 12 , -1};
     struct pair * max_min_pair = find_max_min(arr,  10);
     printf("%d %d", max_min_pair->max, max_min_pair->min);
+    free(max_min_pair);
     return 0;
 }
