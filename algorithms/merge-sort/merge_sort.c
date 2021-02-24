@@ -23,6 +23,7 @@ void merge(int * arr, int low, int mid, int high){
     for (int k = low; k < high+1; ++k){
         arr[k] = temp_arr[k];
     }
+    free(temp_arr);
 }
 
 void merge_sort(int * arr, int low, int high){
