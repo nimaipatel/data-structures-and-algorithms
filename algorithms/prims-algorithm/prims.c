@@ -22,12 +22,16 @@ cost(AdjacencyMatrix * matrix, int i, int j)
 void
 set_cost(AdjacencyMatrix *matrix, int i, int j, double cost)
 {
+    /* sets cost to `cost` between vertices `i` and `j` of
+     * graph `matrix` */
     matrix->arr[i * matrix->n_vertices + j] = matrix->arr[j * matrix->n_vertices + i] = cost;
 }
 
 AdjacencyMatrix *
 create_matrix(int n_vertices)
 {
+    /* creates matrix with `n` rows and columns to represent graph with
+     * `n` nodes and initializes all edges to infinity i.e. not edges */
     AdjacencyMatrix *matrix = (AdjacencyMatrix*)malloc(sizeof(AdjacencyMatrix));
     matrix->n_vertices = n_vertices;
     matrix->arr = (double*)malloc(n_vertices * n_vertices * sizeof(double));
@@ -41,6 +45,7 @@ create_matrix(int n_vertices)
 void
 destroy_matrix(AdjacencyMatrix *matrix)
 {
+    /* destructor for matrix created with `create_matrix` */
     free(matrix->arr);
     free(matrix);
 }
@@ -48,6 +53,7 @@ destroy_matrix(AdjacencyMatrix *matrix)
 Pair
 get_min_cost_edge(AdjacencyMatrix * matrix)
 {
+    /* gets edge with minimum cost from the graph */
     Pair min;
     min.a = min.b = 0;
     for (int i = 0; i < matrix->n_vertices; ++i)
@@ -67,6 +73,7 @@ get_min_cost_edge(AdjacencyMatrix * matrix)
 void 
 print_matrix(AdjacencyMatrix *matrix)
 {
+    /* function to print square matrix */
     for (int i = 0; i < matrix->n_vertices; ++i)
     {
         for (int j = 0; j < matrix->n_vertices; ++j)
@@ -80,6 +87,8 @@ print_matrix(AdjacencyMatrix *matrix)
 AdjacencyMatrix *
 prims_algorithm(AdjacencyMatrix *matrix)
 {
+    /* function accepts a graph represented by adjacency matrix `matrix`
+     * and returns its MST's adjacency matrix */
     AdjacencyMatrix *MST = create_matrix(matrix->n_vertices);
     Pair min = get_min_cost_edge(matrix);
     int k = min.a, l = min.b;
