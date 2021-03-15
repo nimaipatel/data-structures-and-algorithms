@@ -35,8 +35,7 @@ create_matrix(int n_vertices)
     AdjacencyMatrix *matrix = (AdjacencyMatrix*)malloc(sizeof(AdjacencyMatrix));
     matrix->n_vertices = n_vertices;
     matrix->arr = (double*)malloc(n_vertices * n_vertices * sizeof(double));
-    for (int i = 0; i < matrix->n_vertices * matrix->n_vertices; ++i)
-    {
+    for (int i = 0; i < matrix->n_vertices * matrix->n_vertices; ++i) {
         matrix->arr[i] = INFINITY;
     }
     return matrix;
@@ -56,12 +55,9 @@ get_min_cost_edge(AdjacencyMatrix * matrix)
 {
     Pair min;
     min.a = min.b = 0;
-    for (int i = 0; i < matrix->n_vertices; ++i)
-    {
-        for (int j = 0; j < matrix->n_vertices; ++j)
-        {
-            if ( cost(matrix, i, j) < cost(matrix, min.a, min.b) )
-            {
+    for (int i = 0; i < matrix->n_vertices; ++i) {
+        for (int j = 0; j < matrix->n_vertices; ++j) {
+            if ( cost(matrix, i, j) < cost(matrix, min.a, min.b) ) {
                 min.a = i;
                 min.b = j;
             }
@@ -74,10 +70,8 @@ get_min_cost_edge(AdjacencyMatrix * matrix)
 void 
 print_matrix(AdjacencyMatrix *matrix)
 {
-    for (int i = 0; i < matrix->n_vertices; ++i)
-    {
-        for (int j = 0; j < matrix->n_vertices; ++j)
-        {
+    for (int i = 0; i < matrix->n_vertices; ++i) {
+        for (int j = 0; j < matrix->n_vertices; ++j) {
             printf("%.0lf\t", cost(matrix, i, j));
         }
         printf("\n");
@@ -95,8 +89,7 @@ prims_algorithm(AdjacencyMatrix *matrix)
     set_cost(MST, k, l, cost(matrix, k, l));
     double min_cost = cost(matrix, k, l);
     int * near = (int*)malloc(matrix->n_vertices * sizeof(int));
-    for (int i = 0; i < matrix->n_vertices; ++i)
-    {
+    for (int i = 0; i < matrix->n_vertices; ++i) {
         if ( cost(matrix, i, l) < cost(matrix, i, k) )
             near[i] = l;
         else
@@ -109,14 +102,11 @@ prims_algorithm(AdjacencyMatrix *matrix)
     /* adjaceny matrix will have `n_vertices - 1` edges
      * we have filled one edge so loop has to run 
      * `n_vertices - 2` times */
-    for (int _ = 1; _ <= matrix->n_vertices - 2; ++_)
-    {
+    for (int _ = 1; _ <= matrix->n_vertices - 2; ++_) {
         int index;
         double min_cost = INFINITY;
-        for (int j = 0; j < matrix->n_vertices; ++j)
-        {
-            if (near[j] != -1 && cost(matrix, j , near[j]) < min_cost)
-            {
+        for (int j = 0; j < matrix->n_vertices; ++j) {
+            if (near[j] != -1 && cost(matrix, j , near[j]) < min_cost) {
                 index = j;
                 min_cost = cost(matrix, j, near[j]);
             }
@@ -124,10 +114,8 @@ prims_algorithm(AdjacencyMatrix *matrix)
         set_cost( MST, index, near[index], cost(matrix, index, near[index]) );
         min_cost += cost(matrix, index, near[index]);
         near[index] = -1;
-        for (int k = 0; k < matrix->n_vertices; ++k)
-        {
-            if ( near[k] != -1 && cost(matrix, k, near[k]) > cost(matrix, k, index) )
-            {
+        for (int k = 0; k < matrix->n_vertices; ++k) {
+            if ( near[k] != -1 && cost(matrix, k, near[k]) > cost(matrix, k, index) ) {
                 near[k] = index;
             }
         }
