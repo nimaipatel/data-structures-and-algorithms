@@ -1,10 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct Node {
+	int val;
+	struct Node *parent;
+} Node;
+
 typedef struct {
-	int v1, v2;
+	Node ver1, ver2;
 	double cost;
 } GraphEdge;
+
+Node *
+create_node(int v)
+{
+	Node *node = (Node*)malloc(sizeof(Node));
+	node->val = v;
+	node->parent = NULL;
+	return node;
+}
 
 /*
  * heapify `heap` represented by array of
@@ -40,19 +54,52 @@ build_min_heap(GraphEdge **heap, int n)
 	}
 }
 
+Node *
+set_find(Node *node)
+{
+	if (node->parent == NULL) {
+		return node;
+	} else {
+		Node *iter = node;
+		while (iter->parent != NULL)
+			iter = iter->parent;
+		return iter;
+	}
+}
+
+void
+kruskals_algorith(GraphEdge **heap, int n)
+{
+	build_min_heap(heap, n);
+	double mincost = 0;
+	int i = 0;
+	int heapsize = n;
+	while (i < n-1 && heapsize != 0) {
+		GraphEdge *tmp = heap[0];
+		heap[0] = heap[heapsize-1];
+		heap[heapsize-1] = tmp;
+		for (int j = 0 ; j < 4 ; j++) printf("%.0lf ", heap[j]->cost);
+		printf("\t");
+		--heapsize;
+		min_heapify(heap, n, 0);
+		for (int j = 0 ; j < 4 ; j++) printf("%.0lf ", heap[j]->cost);
+		printf("\n");
+	}
+}
+
 int
 main()
 {
-	GraphEdge e1 = { .v1 = 1, .v2 = 2, .cost = 12.0 };
-	GraphEdge e2 = { .v1 = 1, .v2 = 2, .cost = 1.0 };
-	GraphEdge e3 = { .v1 = 1, .v2 = 2, .cost = 112.0 };
-	GraphEdge e4 = { .v1 = 1, .v2 = 2, .cost = 152.0 };
+	GraphEdge e1 = { .ver1 = 1, .ver2 = 2, .cost = 12.0 };
+	GraphEdge e2 = { .ver1 = 1, .ver2 = 2, .cost = 1.0 };
+	GraphEdge e3 = { .ver1 = 1, .ver2 = 2, .cost = 112.0 };
+	GraphEdge e4 = { .ver1 = 1, .ver2 = 2, .cost = 152.0 };
 	GraphEdge *heap[] = {
 		&e1,
 		&e2,
 		&e3,
 		&e4,
 	};
-	build_min_heap(heap, 4);
+	kruskals_algorith(heap, 4);
 	return 0;
 }
