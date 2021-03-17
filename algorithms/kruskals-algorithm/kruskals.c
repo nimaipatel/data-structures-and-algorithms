@@ -1,105 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct Node {
-	int val;
-	struct Node *parent;
-} Node;
+#include <math.h>
 
 typedef struct {
-	Node ver1, ver2;
+	int ver1, ver2;
 	double cost;
-} GraphEdge;
+} Edge;
 
-Node *
-create_node(int v)
-{
-	Node *node = (Node*)malloc(sizeof(Node));
-	node->val = v;
-	node->parent = NULL;
-	return node;
-}
-
-/*
- * heapify `heap` represented by array of
- * length `n` starting at index `i`
- */
-void
-min_heapify(GraphEdge **heap, int n, int i)
-{
-	int min = i;
-	int left  = 2*i + 1;
-	int right = 2*i + 2;
-
-	if (left < n && heap[left]->cost < heap[min]->cost) {
-		min = left;
-	}
-	if (right < n && heap[right]->cost < heap[min]->cost) {
-		min = right;
-	}
-	/* if `min` is not minimum swap and recurse to check for child nodes */
-	if (min != i) {
-		GraphEdge *tmp = heap[i];
-		heap[i] = heap[min];
-		heap[min] = tmp;
-		min_heapify(heap, n, min);
-	}
-}
+typedef struct {
+	Edge **edges;
+	double mincost;
+} Pair;
 
 void
-build_min_heap(GraphEdge **heap, int n)
+sort(Edge **edges, int n)
 {
-	for (int i = n / 2; i >= 0; --i) {
-		min_heapify(heap, n, i);
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j < n - 1; ++j) {
+			if (edges[j]->cost > edges[j+1]->cost) {
+				Edge *tmp = edges[j];
+				edges[j] = edges[j+1];
+				edges[j+1] = tmp;
+			}
+		}
 	}
 }
 
-Node *
-set_find(Node *node)
+Edge **
+kruskals_algorithm(Edge **edges, int n_edges, int n_verts)
 {
-	if (node->parent == NULL) {
-		return node;
-	} else {
-		Node *iter = node;
-		while (iter->parent != NULL)
-			iter = iter->parent;
-		return iter;
+	int *find = (int*)malloc(sizeof(int) * n_verts);
+	Edge **mst_edges = (Edge**)malloc(sizeof(Edge*) * (n_verts - 1));
+	double mincost = 0.0;
+	for (int i = 0; i < n_verts; ++i)
+		find[i] = i;
+	sort(edges, n_edges);
+	for (int i = 0; i < n_verts - 1; ++i) {
+		int closest = -1;
+		for (int j = 0; j < n_edges && closest == -1; ++j) {
+			if (find[edges[j]->ver1] != find[edges[j]->ver2])
+				closest = j;
+		}
+		mst_edges[i] = edges[closest];
+		for (int j = 0; j < n_verts; ++j) {
+			if (find[j] == edges[closest]->ver2)
+				find[j] = edges[closest]->ver1;
+		}
+		mincost += edges[closest]->cost;
 	}
+	free(find);
+	return mst_edges;
 }
 
 void
-kruskals_algorith(GraphEdge **heap, int n)
+print_adj_matrix(Edge **edges, int n)
 {
-	build_min_heap(heap, n);
-	double mincost = 0;
-	int i = 0;
-	int heapsize = n;
-	while (i < n-1 && heapsize != 0) {
-		GraphEdge *tmp = heap[0];
-		heap[0] = heap[heapsize-1];
-		heap[heapsize-1] = tmp;
-		for (int j = 0 ; j < 4 ; j++) printf("%.0lf ", heap[j]->cost);
-		printf("\t");
-		--heapsize;
-		min_heapify(heap, n, 0);
-		for (int j = 0 ; j < 4 ; j++) printf("%.0lf ", heap[j]->cost);
-		printf("\n");
+	for (int i = 0; i < n; ++i) {
+		printf("%d -- %.0lf --> %d\n",
+		       edges[i]->ver1, edges[i]->cost, edges[i]->ver2);
 	}
 }
 
 int
 main()
 {
-	GraphEdge e1 = { .ver1 = 1, .ver2 = 2, .cost = 12.0 };
-	GraphEdge e2 = { .ver1 = 1, .ver2 = 2, .cost = 1.0 };
-	GraphEdge e3 = { .ver1 = 1, .ver2 = 2, .cost = 112.0 };
-	GraphEdge e4 = { .ver1 = 1, .ver2 = 2, .cost = 152.0 };
-	GraphEdge *heap[] = {
+	Edge e0 = { .ver1 = 0, .ver2 = 1, .cost = 4 };
+	Edge e1 = { .ver1 = 0, .ver2 = 3, .cost = 8 };
+	Edge e2 = { .ver1 = 2, .ver2 = 3, .cost = 1 };
+	Edge e3 = { .ver1 = 2, .ver2 = 1, .cost = 3 };
+	Edge e4 = { .ver1 = 1, .ver2 = 3, .cost = 5 };
+	Edge *edges[] = {
+		&e0,
 		&e1,
 		&e2,
 		&e3,
 		&e4,
 	};
-	kruskals_algorith(heap, 4);
-	return 0;
+	Edge **mst_edges = kruskals_algorithm(edges, 5, 4);
+	print_adj_matrix(mst_edges, 3);
 }
