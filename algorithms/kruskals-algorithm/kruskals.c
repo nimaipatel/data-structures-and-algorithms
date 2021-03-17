@@ -26,7 +26,7 @@ sort(Edge **edges, int n)
 	}
 }
 
-Edge **
+Pair *
 kruskals_algorithm(Edge **edges, int n_edges, int n_verts)
 {
 	int *find = (int*)malloc(sizeof(int) * n_verts);
@@ -49,7 +49,10 @@ kruskals_algorithm(Edge **edges, int n_edges, int n_verts)
 		mincost += edges[closest]->cost;
 	}
 	free(find);
-	return mst_edges;
+	Pair *ret = (Pair*)malloc(sizeof(Pair));
+	ret->mincost = mincost;
+	ret->edges = mst_edges;
+	return ret;
 }
 
 void
@@ -64,18 +67,36 @@ print_adj_matrix(Edge **edges, int n)
 int
 main()
 {
-	Edge e0 = { .ver1 = 0, .ver2 = 1, .cost = 4 };
-	Edge e1 = { .ver1 = 0, .ver2 = 3, .cost = 8 };
-	Edge e2 = { .ver1 = 2, .ver2 = 3, .cost = 1 };
-	Edge e3 = { .ver1 = 2, .ver2 = 1, .cost = 3 };
-	Edge e4 = { .ver1 = 1, .ver2 = 3, .cost = 5 };
-	Edge *edges[] = {
-		&e0,
-		&e1,
-		&e2,
-		&e3,
-		&e4,
-	};
-	Edge **mst_edges = kruskals_algorithm(edges, 5, 4);
-	print_adj_matrix(mst_edges, 3);
+	int n_verts, n_edges;
+	printf("Enter number of vertices in graph: ");
+	scanf("%d", &n_verts);
+	printf("Enter number of edges in graph: ");
+	scanf("%d", &n_edges);
+	Edge **edges = (Edge**)malloc(sizeof(Edge*) * n_edges);
+	for (int i = 0; i < n_edges; ++i) {
+		int v1, v2;
+		double cost;
+		printf("Enter first vertex: ");
+		scanf("%d",&v1);
+		printf("Enter second vertex: ");
+		scanf("%d",&v2);
+		printf("Enter cost of this edge: ");
+		scanf("%lf",&cost);
+		edges[i] = (Edge*)malloc(sizeof(Edge));
+		edges[i]->ver1 = v1;
+		edges[i]->ver2 = v2;
+		edges[i]->cost = cost;
+	}
+
+	Pair *mst = kruskals_algorithm(edges, n_edges, n_verts);
+	printf("Adjacency matrix of MST is: \n");
+	print_adj_matrix(mst->edges, n_verts - 1);
+
+	for (int i = 0; i < n_edges; ++i) {
+		free(edges[i]);
+	}
+	free(edges);
+	free(mst->edges);
+	free(mst);
+	return 0;
 }
