@@ -95,8 +95,8 @@ dijkstras_algo(Matrix *matrix, unsigned int s)
 		visited[u] = true;
 		for (unsigned int v = 0; v < matrix->n_verts; ++v) {
 			if (visited[v] == false) {
-				dist[v] = min(dist[v], 
-					      dist[u] + cost(matrix, u, v));
+				dist[v] = min(dist[v],
+				              dist[u] + cost(matrix, u, v));
 			}
 		}
 	}
