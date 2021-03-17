@@ -24,8 +24,6 @@ min_heapify(GraphEdge **heap, int n, int i)
 		min = right;
 	}
 	/* if `min` is not minimum swap and recurse to check for child nodes */
-	for (int i = 0; i < n; ++i) printf("%lf ", heap[i]->cost);
-	printf("\n");
 	if (min != i) {
 		GraphEdge *tmp = heap[i];
 		heap[i] = heap[min];
