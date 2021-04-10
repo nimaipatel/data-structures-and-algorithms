@@ -30,9 +30,7 @@ lcs(char *str1, char *str2)
 }
 
 int
-main()
+main(int argc, char **argv)
 {
-	char *string1 = "HAVANA";
-	char *string2 = "SAVANNAH";
-	printf("%d", lcs(string1, string2));
+	printf("Length of LCS: %d\n", lcs(argv[1], argv[2]));
 }
