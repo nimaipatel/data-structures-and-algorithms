@@ -3,45 +3,61 @@
 #include <stdbool.h>
 
 void
-sum_of_sub(int size, bool *sol, int *W, int s, int k, int r, int M)
+__sum_of_sub(int size, bool *sol, int *set,
+           int acc_sum, int curr, int rem, int aim)
 {
-	sol[k] = true;
-	if (s + W[k] == M) {
-		for (int i = 0; i < k + 1; ++i) {
+	sol[curr] = true;
+	if (acc_sum + set[curr] == aim) {
+		for (int i = 0; i < curr + 1; ++i) {
 			if (sol[i]) {
-				printf("%d ", W[i]);
+				printf("%d ", set[i]);
 			}
 		}
 		printf("\n");
 	} else {
-		if (s + W[k] + W[k + 1] <= M) {
-			sum_of_sub(size, sol, W, s + W[k], k + 1, r - W[k], M);
+		if (acc_sum + set[curr] + set[curr + 1] <= aim) {
+			__sum_of_sub(size, sol, set,
+			           acc_sum + set[curr],
+			           curr + 1,
+			           rem - set[curr],
+			           aim);
 		}
-		if (s + r - W[k] >= M && s + W[k + 1] <= M) {
-			sol[k] = false;
-			sum_of_sub(size, sol, W, s, k + 1, r - W[k], M);
+		if (acc_sum + rem - set[curr] >= aim &&
+		    acc_sum + set[curr + 1] <= aim) {
+			sol[curr] = false;
+			__sum_of_sub(size, sol, set,
+			           acc_sum,
+			           curr + 1,
+			           rem - set[curr],
+			           aim);
 		}
 	}
 }
 
-int
-main(int argc, char **argv) {
-	/* last argument is M and all before it are part of the set */
-	int size = argc - 2;
-	int *W = malloc(sizeof(int) * size);
-	for (int i = 0; i < size; ++i) {
-		W[i] = atoi(argv[i + 1]);
-	}
-	int M = atoi(argv[argc - 1]);
-
+void
+sum_of_sub(int size, int *set, int aim)
+{
 	bool *sol = malloc(sizeof(bool) * size);
 
 	int sum = 0;
 	for (int i = 0; i < size; ++i) {
-		sum += W[i];
+		sum += set[i];
 	}
 
-	sum_of_sub(size, sol, W, 0, 0, sum, M);
+	__sum_of_sub(size, sol, set, 0, 0, sum, aim);
+}
 
+int
+main(int argc, char **argv) {
+	/* last argument is M (target sum) and all arguments 
+	 * before it are part of the set */
+	int size = argc - 2;
+	int *set = malloc(sizeof(int) * size);
+	for (int i = 0; i < size; ++i) {
+		set[i] = atoi(argv[i + 1]);
+	}
+	int aim = atoi(argv[argc - 1]);
+
+	sum_of_sub(size, set, aim);
 	return 0;
 }
