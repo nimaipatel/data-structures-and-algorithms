@@ -14,7 +14,8 @@ place(int size, int *sol, int row, int col)
 }
 
 void
-n_queens(int size, int *sol, int row) {
+__n_queens(int size, int *sol, int row) 
+{
 	for (int col = 0; col < size; ++col) {
 		if (place(size, sol, row, col)) {
 			sol[row] = col;
@@ -23,17 +24,24 @@ n_queens(int size, int *sol, int row) {
 					printf("%d\t", sol[i]);
 				printf("\n");
 			} else {
-				n_queens(size, sol, row + 1);
+				__n_queens(size, sol, row + 1);
 			}
 		}
 	}
 }
 
+void
+n_queens(int size)
+{
+	int *sol = malloc(sizeof(int) * size); 
+	__n_queens(size, sol, 0);
+	free(sol);
+}
+
+
 int
 main(int argc, char **argv) {
 	int size = atoi(argv[1]);
-	int *sol = malloc(sizeof(int) * size); 
-	n_queens(size, sol, 0);
-	free(sol);
+	n_queens(size);
 	return 0;
 }
