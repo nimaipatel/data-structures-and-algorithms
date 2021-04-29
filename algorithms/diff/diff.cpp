@@ -75,5 +75,10 @@ main(int argc, char **argv)
 	int **l = fill_table(f1_lines, f2_lines, m, n);
 	print_diff(l, f1_lines, f2_lines, m, n);
 
+	for (int i = 0; i < m + 1; ++i) {
+		delete l[i];
+	}
+	delete l;
+
 	return 0;
 }
