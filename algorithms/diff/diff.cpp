@@ -29,7 +29,7 @@ fill_table(std::vector<std::string>v1, std::vector<std::string> v2,
 
 void
 print_diff(int **l, std::vector<std::string> v1, std::vector<std::string> v2,
-     int m, int n)
+           int m, int n)
 {
 	if (m > 0 && n > 0 && l[m][n] != std::max(l[m][n - 1], l[m - 1][n])) {
 		print_diff(l, v1, v2, m - 1, n - 1);
