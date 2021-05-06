@@ -4,7 +4,7 @@
 
 void
 __sum_of_sub(int size, bool *sol, int *set,
-           int acc_sum, int curr, int rem, int aim)
+             int acc_sum, int curr, int rem, int aim)
 {
 	sol[curr] = true;
 	if (acc_sum + set[curr] == aim) {
@@ -17,19 +17,19 @@ __sum_of_sub(int size, bool *sol, int *set,
 	} else {
 		if (acc_sum + set[curr] + set[curr + 1] <= aim) {
 			__sum_of_sub(size, sol, set,
-			           acc_sum + set[curr],
-			           curr + 1,
-			           rem - set[curr],
-			           aim);
+			             acc_sum + set[curr],
+			             curr + 1,
+			             rem - set[curr],
+			             aim);
 		}
 		if (acc_sum + rem - set[curr] >= aim &&
 		    acc_sum + set[curr + 1] <= aim) {
 			sol[curr] = false;
 			__sum_of_sub(size, sol, set,
-			           acc_sum,
-			           curr + 1,
-			           rem - set[curr],
-			           aim);
+			             acc_sum,
+			             curr + 1,
+			             rem - set[curr],
+			             aim);
 		}
 	}
 }
