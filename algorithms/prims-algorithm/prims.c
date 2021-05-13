@@ -11,12 +11,20 @@ typedef struct {
 	int a, b;
 } Pair;
 
+/*
+ * returns cost of edge formed by vertices `i` and `j` in
+ * graph represented by adjacency matrix `matrix`
+ */
 double
 cost(Matrix *matrix, int i, int j)
 {
 	return matrix->arr[i * matrix->n_vertices + j];
 }
 
+/*
+ * sets cost to `cost` between vertices `i` and `j` of
+ * graph `matrix`
+ */
 void
 set_cost(Matrix *matrix, int i, int j, double cost)
 {
@@ -24,6 +32,10 @@ set_cost(Matrix *matrix, int i, int j, double cost)
 		matrix->arr[j * matrix->n_vertices + i] = cost;
 }
 
+/*
+ * creates matrix with `n` rows and columns to represent graph with
+ * `n` nodes and initializes all edges to infinity i.e. not edges
+ */
 Matrix *
 create_matrix(int n_vertices)
 {
@@ -37,6 +49,7 @@ create_matrix(int n_vertices)
 	return matrix;
 }
 
+/* destructor for matrix created with `create_matrix` */
 void
 destroy_matrix(Matrix *matrix)
 {
@@ -44,6 +57,7 @@ destroy_matrix(Matrix *matrix)
 	free(matrix);
 }
 
+/* gets edge with minimum cost from the graph */
 Pair
 get_min_cost_edge(Matrix *matrix)
 {
@@ -60,7 +74,8 @@ get_min_cost_edge(Matrix *matrix)
 	return min;
 }
 
-void
+/* function to print square matrix */
+void 
 print_matrix(Matrix *matrix)
 {
 	for (int i = 0; i < matrix->n_vertices; ++i) {
@@ -71,6 +86,10 @@ print_matrix(Matrix *matrix)
 	}
 }
 
+/*
+ * function accepts a graph represented by adjacency matrix `matrix`
+ * and returns its MST's adjacency matrix
+ */
 Matrix *
 prims_algorithm(Matrix *matrix)
 {
@@ -87,7 +106,12 @@ prims_algorithm(Matrix *matrix)
 			near[i] = k;
 	}
 	printf("\n");
+	/* we represent including `k` and `l` in MST by
+	 * setting their keys in `near` to -1 */
 	near[k] = near[l] = -1;
+	/* adjaceny matrix will have `n_vertices - 1` edges
+	 * we have filled one edge so loop has to run 
+	 * `n_vertices - 2` times */
 	for (int _ = 1; _ <= matrix->n_vertices - 2; ++_) {
 		int index;
 		double min_cost = INFINITY;
@@ -115,20 +139,15 @@ prims_algorithm(Matrix *matrix)
 int
 main()
 {
-	Matrix *matrix = create_matrix(6);
-	set_cost(matrix, 0, 1, 3);
-	set_cost(matrix, 0, 3, 4);
+	Matrix * matrix = create_matrix(6);
+	set_cost(matrix, 0, 1, 8);
 	set_cost(matrix, 0, 2, 1);
-
-	set_cost(matrix, 1, 3, 5);
-	set_cost(matrix, 1, 4, 3);
-
-	set_cost(matrix, 2, 3, 5);
-	set_cost(matrix, 2, 5, 3);
-
-	set_cost(matrix, 5, 3, 6);
-	set_cost(matrix, 5, 4, 2);
-
+	set_cost(matrix, 1, 2, 5);
+	set_cost(matrix, 1, 3, 2);
+	set_cost(matrix, 2, 4, 7);
+	set_cost(matrix, 3, 4, 2);
+	set_cost(matrix, 3, 5, 3);
+	set_cost(matrix, 4, 5, 15);
 	Matrix *MST = prims_algorithm(matrix);
 	print_matrix(matrix);
 	printf("\n");
