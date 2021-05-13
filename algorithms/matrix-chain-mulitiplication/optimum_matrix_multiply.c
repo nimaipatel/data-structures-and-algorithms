@@ -14,8 +14,8 @@ matrix_chain_mul(int *d, int n)
 			int j = i + l - 1;
 			cost[i][j] = INFINITY;
 			for (int k = i; k <= j - 1; ++k) {
-				int q = cost[i][k] + cost[k + 1][j]
-				        + d[i - 1] * d[k] * d[j];
+				int q = cost[i][k] + cost[k + 1][j] +
+					d[i - 1] * d[k] * d[j];
 				if (q < cost[i][j])
 					cost[i][j] = q;
 			}
@@ -37,6 +37,6 @@ main()
 	}
 
 	printf("Number of operations for optimum pairing: %d\n",
-	        matrix_chain_mul(d, n + 1));
+	       matrix_chain_mul(d, n + 1));
 	return 0;
 }

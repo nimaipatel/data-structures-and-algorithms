@@ -3,8 +3,8 @@
 #include <stdbool.h>
 
 void
-__sum_of_sub(int size, bool *sol, int *set,
-             int acc_sum, int curr, int rem, int aim)
+__sum_of_sub(int size, bool *sol, int *set, int acc_sum, int curr, int rem,
+	     int aim)
 {
 	sol[curr] = true;
 	if (acc_sum + set[curr] == aim) {
@@ -16,20 +16,14 @@ __sum_of_sub(int size, bool *sol, int *set,
 		printf("\n");
 	} else {
 		if (acc_sum + set[curr] + set[curr + 1] <= aim) {
-			__sum_of_sub(size, sol, set,
-			             acc_sum + set[curr],
-			             curr + 1,
-			             rem - set[curr],
-			             aim);
+			__sum_of_sub(size, sol, set, acc_sum + set[curr],
+				     curr + 1, rem - set[curr], aim);
 		}
 		if (acc_sum + rem - set[curr] >= aim &&
 		    acc_sum + set[curr + 1] <= aim) {
 			sol[curr] = false;
-			__sum_of_sub(size, sol, set,
-			             acc_sum,
-			             curr + 1,
-			             rem - set[curr],
-			             aim);
+			__sum_of_sub(size, sol, set, acc_sum, curr + 1,
+				     rem - set[curr], aim);
 		}
 	}
 }
@@ -48,7 +42,8 @@ sum_of_sub(int size, int *set, int aim)
 }
 
 int
-main(int argc, char **argv) {
+main(int argc, char **argv)
+{
 	/* last argument is M (target sum) and all arguments 
 	 * before it are part of the set */
 	int size = argc - 2;

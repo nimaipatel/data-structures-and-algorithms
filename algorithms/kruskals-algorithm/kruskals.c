@@ -17,10 +17,10 @@ sort(Edge **edges, int n)
 {
 	for (int i = 0; i < n; ++i) {
 		for (int j = 0; j < n - 1; ++j) {
-			if (edges[j]->cost > edges[j+1]->cost) {
+			if (edges[j]->cost > edges[j + 1]->cost) {
 				Edge *tmp = edges[j];
-				edges[j] = edges[j+1];
-				edges[j+1] = tmp;
+				edges[j] = edges[j + 1];
+				edges[j + 1] = tmp;
 			}
 		}
 	}
@@ -29,8 +29,8 @@ sort(Edge **edges, int n)
 Pair *
 kruskals_algorithm(Edge **edges, int n_edges, int n_verts)
 {
-	int *find = (int*)malloc(sizeof(int) * n_verts);
-	Edge **mst_edges = (Edge**)malloc(sizeof(Edge*) * (n_verts - 1));
+	int *find = (int *)malloc(sizeof(int) * n_verts);
+	Edge **mst_edges = (Edge **)malloc(sizeof(Edge *) * (n_verts - 1));
 	double mincost = 0.0;
 	for (int i = 0; i < n_verts; ++i)
 		find[i] = i;
@@ -49,7 +49,7 @@ kruskals_algorithm(Edge **edges, int n_edges, int n_verts)
 		mincost += edges[closest]->cost;
 	}
 	free(find);
-	Pair *ret = (Pair*)malloc(sizeof(Pair));
+	Pair *ret = (Pair *)malloc(sizeof(Pair));
 	ret->mincost = mincost;
 	ret->edges = mst_edges;
 	return ret;
@@ -59,8 +59,8 @@ void
 print_adj_matrix(Edge **edges, int n)
 {
 	for (int i = 0; i < n; ++i) {
-		printf("%d -- %.0lf --> %d\n",
-		       edges[i]->ver1, edges[i]->cost, edges[i]->ver2);
+		printf("%d -- %.0lf --> %d\n", edges[i]->ver1, edges[i]->cost,
+		       edges[i]->ver2);
 	}
 }
 
@@ -72,17 +72,17 @@ main()
 	scanf("%d", &n_verts);
 	printf("Enter number of edges in graph: ");
 	scanf("%d", &n_edges);
-	Edge **edges = (Edge**)malloc(sizeof(Edge*) * n_edges);
+	Edge **edges = (Edge **)malloc(sizeof(Edge *) * n_edges);
 	for (int i = 0; i < n_edges; ++i) {
 		int v1, v2;
 		double cost;
 		printf("Enter first vertex: ");
-		scanf("%d",&v1);
+		scanf("%d", &v1);
 		printf("Enter second vertex: ");
-		scanf("%d",&v2);
+		scanf("%d", &v2);
 		printf("Enter cost of this edge: ");
-		scanf("%lf",&cost);
-		edges[i] = (Edge*)malloc(sizeof(Edge));
+		scanf("%lf", &cost);
+		edges[i] = (Edge *)malloc(sizeof(Edge));
 		edges[i]->ver1 = v1;
 		edges[i]->ver2 = v2;
 		edges[i]->cost = cost;

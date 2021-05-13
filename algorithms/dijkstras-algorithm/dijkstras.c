@@ -30,9 +30,9 @@ cost(Matrix *matrix, unsigned int v1, unsigned int v2)
 Matrix *
 create_matrix(unsigned int n_verts)
 {
-	Matrix *matrix = (Matrix*)malloc(sizeof(Matrix));
+	Matrix *matrix = (Matrix *)malloc(sizeof(Matrix));
 	matrix->n_verts = n_verts;
-	matrix->arr = (double*)malloc(sizeof(double) * n_verts * n_verts);
+	matrix->arr = (double *)malloc(sizeof(double) * n_verts * n_verts);
 	for (unsigned int i = 0; i < n_verts; ++i) {
 		for (unsigned int j = 0; j < n_verts; ++j) {
 			if (i == j)
@@ -56,7 +56,7 @@ print_matrix(Matrix *matrix)
 {
 	for (int i = 0; i < matrix->n_verts; ++i) {
 		for (int j = 0; j < matrix->n_verts; ++j) {
-			printf("%.0lf\t", cost(matrix, i,j));
+			printf("%.0lf\t", cost(matrix, i, j));
 		}
 		printf("\n");
 	}
@@ -81,22 +81,21 @@ min_cost_unvisited(Matrix *matrix, bool *visited, double *dist)
 double *
 dijkstras_algo(Matrix *matrix, unsigned int s)
 {
-	double *dist = (double*)malloc(sizeof(double) * matrix->n_verts);
-	bool *visited = (bool*)malloc(sizeof(bool) * matrix->n_verts);
-	for (unsigned int i = 0; i < matrix->n_verts; ++i)
-	{
+	double *dist = (double *)malloc(sizeof(double) * matrix->n_verts);
+	bool *visited = (bool *)malloc(sizeof(bool) * matrix->n_verts);
+	for (unsigned int i = 0; i < matrix->n_verts; ++i) {
 		visited[i] = false;
 		dist[i] = cost(matrix, s, i);
 	}
 	visited[s] = true;
 	dist[s] = 0;
-	for (unsigned int _ = 2; _ < matrix->n_verts - 1; ++_){
+	for (unsigned int _ = 2; _ < matrix->n_verts - 1; ++_) {
 		unsigned int u = min_cost_unvisited(matrix, visited, dist);
 		visited[u] = true;
 		for (unsigned int v = 0; v < matrix->n_verts; ++v) {
 			if (visited[v] == false) {
 				dist[v] = min(dist[v],
-				              dist[u] + cost(matrix, u, v));
+					      dist[u] + cost(matrix, u, v));
 			}
 		}
 	}
